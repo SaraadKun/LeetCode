@@ -1,7 +1,7 @@
 package com.saraad.leetcode.group01;
 
 /**
- * @Title: 寻找两个有序数组的中位数
+ * @Title: 寻找两个有序数组的中位数 要求时间复杂度O(log(m+n))
  * @Package:com.saraad.leetcode.group01
  * @Description:
  * @author: saraad
@@ -17,7 +17,22 @@ public class MidNumOfTwoSortArray {
         System.out.println(mid);
     }
 
+    //二分法 第k小的数
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if ((nums1 == null || nums1.length == 0) && (nums2 == null || nums2.length == 0)) throw new RuntimeException("invalid args");
+        if (nums1 == null || nums1.length == 0) return nums2[nums2.length/2];
+        if (nums2 == null || nums2.length == 0) return nums1[nums1.length/2];
+        //1.确定中位数位置,即k值
+
+        //2.确定短数组和长数组,方便处理边界条件
+
+        //3.比较两数组k/2处数大小,较小的数最大为第k-1小的数,故可排除k/2个数,构建新数组,重新确定k的值
+        //注意处理边界条件,一个数组数据用光,直接取剩下数组的第k个数即可
+        return 0;
+    }
+
+    //归并排序merge O(m+n)
+    public static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
         if (nums1 == null && nums2 == null) return 0;
         int len1 = nums1 == null ? 0 : nums1.length;
         int len2 = nums2 == null ? 0 : nums2.length;
