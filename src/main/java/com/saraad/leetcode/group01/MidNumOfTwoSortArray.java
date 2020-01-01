@@ -11,24 +11,43 @@ package com.saraad.leetcode.group01;
 public class MidNumOfTwoSortArray {
 
     public static void main(String[] args) {
-        int[] num1 = {};
-        int[] num2 = {};
-        double mid = findMedianSortedArrays(num1, num2);
+        int[] num2 = {1,3};
+        int[] num1 = {2,4};
+        double mid = findMedianSortedArrays(num1,num2);
         System.out.println(mid);
     }
 
+    public static double findMedianSortedArrays(int[] num1, int[] num2){
+        int len1 = num1.length;
+        int len2 = num2.length;
+        int k1 = (len1 + len2 + 1)/2;
+        int k2 = (len1 + len2 + 2)/2;
+        //总长度为奇数会计算两次重复值
+        return (findMedianSortedArrays(num1, 0, len1-1, num2, 0, len2-1, k1) +
+                findMedianSortedArrays(num1, 0, len1-1, num2, 0, len2-1, k2))/2;
+    };
+
     //二分法 第k小的数
-    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        if ((nums1 == null || nums1.length == 0) && (nums2 == null || nums2.length == 0)) throw new RuntimeException("invalid args");
-        if (nums1 == null || nums1.length == 0) return nums2[nums2.length/2];
-        if (nums2 == null || nums2.length == 0) return nums1[nums1.length/2];
-        //1.确定中位数位置,即k值
+    public static double findMedianSortedArrays(int[] nums1,int start1, int end1, int[] nums2, int start2, int end2, int k) {
+        int len1 = end1 - start1 + 1;
+        int len2 = end2 - start2 + 1;
+        //让num1为短数组
+        if (len1 > len2) return findMedianSortedArrays(nums2, start2, end2, nums1, start1, end1, k);
+        //num1元素用光
+        if (len1 == 0) return nums2[start2 + k - 1];
+        if (k == 1) return min(nums1[start1], nums2[start2]);
+        //比较两数组k/2处数大小,较小的数最大为第k-1小的数,故可排除k/2个数,构建新数组,重新确定k的值
+        int index1 = start1 + min(len1, k/2) - 1;
+        int index2 = start2 + min(len2, k/2) - 1;
+        if (nums1[index1] > nums2[index2]){
+            return findMedianSortedArrays(nums1, start1, end1, nums2, index2 + 1, end2, k - min(len2,k/2));
+        }else {
+            return findMedianSortedArrays(nums1, index1 + 1, end1, nums2, start2, end2, k - min(len1,k/2));
+        }
+    }
 
-        //2.确定短数组和长数组,方便处理边界条件
-
-        //3.比较两数组k/2处数大小,较小的数最大为第k-1小的数,故可排除k/2个数,构建新数组,重新确定k的值
-        //注意处理边界条件,一个数组数据用光,直接取剩下数组的第k个数即可
-        return 0;
+    public static int min(int n1, int n2){
+        return n1 > n2 ? n2 : n1;
     }
 
     //归并排序merge O(m+n)
