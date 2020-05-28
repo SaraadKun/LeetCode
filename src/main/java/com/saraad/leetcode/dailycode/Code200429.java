@@ -45,9 +45,10 @@ import java.util.stream.Stream;
 public class Code200429 {
 
     public static void main(String[] args) {
-        int[] arr = {1,2,3,4,5,3,1};
+//        int[] arr = {1,2,3,4,5,3,1};
+        int[] arr = {1,2,3,4,5,8,3,1};
         MountainArrayImpl mountainArray = new MountainArrayImpl(arr);
-        int index = findInMountainArray(3, mountainArray);
+        int index = findInMountainArray(5, mountainArray);
         System.out.println(index);
 
     }
@@ -56,46 +57,51 @@ public class Code200429 {
         int len;
         //边界条件
         if ((len = mountainArr.length()) < 1){return -1;}
-        if (target > mountainArr.get(len / 2) || (target < mountainArr.get(0) && target < mountainArr.get(len - 1))) {
+        int top = findHilltop(mountainArr);
+        if (target > mountainArr.get(top) || (target < mountainArr.get(0) && target < mountainArr.get(len - 1))) {
             return -1;
         }
-        //特殊情况 若target < mountainArr.get(0) 直接搜索右半边
-        if (target < mountainArr.get(0)){
-            return findInMountainArrayRight(target, mountainArr);
-        }else {
-            //左半边未找到,搜索右半边
-            int index = findInMountainArrayLeft(target, mountainArr);
-            return index == -1 ? findInMountainArrayRight(target, mountainArr) : index;
-        }
+        //查询山顶
+        //左半边未找到,搜索右半边
+        int index = findInMountainArray(target, mountainArr, 0, top, true);
+        return index == -1 ? findInMountainArray(target, mountainArr, top, len - 1, false) : index;
     }
 
-    static int findInMountainArrayLeft(int target, MountainArray mountainArr){
-        int lo = 0;
-        int hi = mountainArr.length() / 2;
-        while (lo != hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (target < mountainArr.get(mid)){
-                hi = mid;
-            }else if (target >mountainArr.get(mid)){
-                lo = mid;
+    private static int findHilltop(MountainArray mountainArr) {
+        int lo = 0, hi = mountainArr.length() - 1;
+        while (lo < hi) {
+            int mid = (hi + lo) >> 1;
+            if (mid == 0) {
+               return 1;
+            }
+            if (mid == mountainArr.length() - 1) {
+               return mountainArr.length() - 2;
+            }
+            int mid_val = mountainArr.get(mid);
+            int l_val = mountainArr.get(mid - 1);
+            int r_val = mountainArr.get(mid + 1);
+            if (r_val > mid_val) {
+                lo = mid + 1;
+            } else if (l_val > mid_val){
+                hi = mid - 1;
             }else {
                 return mid;
             }
         }
-        return target == mountainArr.get(lo) ? lo : -1;
+        return lo;
     }
 
-    static int findInMountainArrayRight(int target, MountainArray mountainArr){
-        int lo = mountainArr.length() / 2;
-        int hi = mountainArr.length() - 1;
-        while (lo != hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (target > mountainArr.get(mid)){
-                hi = mid;
-            }else if (target < mountainArr.get(mid)){
-                lo = mid;
-            }else {
+    static int findInMountainArray(int target, MountainArray mountainArr, int lo, int hi, boolean mode){
+        while (lo < hi) {
+            int mid = (hi + lo) >> 1;
+            int mid_val = mountainArr.get(mid);
+            if (target == mid_val){
                 return mid;
+            }
+            if ((target > mid_val) == mode){
+                lo = mid + 1;
+            }else {
+                hi = mid - 1;
             }
         }
         return target == mountainArr.get(lo) ? lo : -1;
