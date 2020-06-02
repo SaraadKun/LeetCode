@@ -33,8 +33,11 @@ public class Code200528 {
     public static void main(String[] args) {
         String s = "ADOBECODEBANC";
         String t = "ABC";
+//        String s = "A";
+//        String t = "A";
         String result = minWindow(s, t);
         System.out.println(result);
+//        System.out.println(s.substring(9,12));
     }
 
     public static String minWindow(String s, String t){
@@ -43,29 +46,41 @@ public class Code200528 {
         }
         HashMap<Character, Integer> current = new HashMap<>();
         HashMap<Character, Integer> origin = new HashMap<>();
-        int[] arr = {0,-1};
+        //存放索引
+        int[] ids = new int[s.length()];
+        char[] shorts = new char[s.length()];
+        int len = 0;
         for (char c : t.toCharArray()) {
             origin.put(c, origin.get(c) == null ? 1 : origin.get(c) + 1);
         }
-        char[] chars = s.toCharArray();
-        int i = 0, j = 0;
+        Set<Character> keySet = origin.keySet();
+        //预处理s
+        for (int i = 0; i < s.length(); i++) {
+           if (keySet.contains(s.charAt(i))){
+               ids[len] = i;
+               shorts[len] = s.charAt(i);
+               len++;
+           }
+        }
+        int l = 0, r = -1;
+        int i = -1, j = 0;
         while (true){
             if (!check(current, origin)) {
-                current.put(chars[i], current.get(chars[i]) == null ? 1 : current.get(chars[i]) + 1);
-                i++;
-            }else {
-                if (arr[1] < 0 || (i-j) < (arr[1] - arr[0])){
-                    arr[0] = j;
-                    arr[1] = i;
+                if (++i >= len){
+                    break;
                 }
-                current.put(chars[j], current.get(chars[j]) - 1);
+                current.put(shorts[i],current.getOrDefault(shorts[i],0) + 1);
+            }else {
+                if (r < 0 || ids[i] - ids[j] < r - l){
+                    r = ids[i];
+                    l = ids[j];
+                }
+                current.put(shorts[j], current.get(shorts[j]) - 1);
                 j++;
             }
-            if (i >= chars.length && !check(current,origin)){
-                break;
-            }
         }
-        return arr[1] < 0 ? "" : s.substring(arr[0],arr[1]);
+
+        return r < 0 ? "" : s.substring(l,r+1);
 
     }
 
