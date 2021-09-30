@@ -27,28 +27,36 @@ public class Code200429_2 {
         int len;
         //边界条件
         if ((len = mountainArr.length()) < 1){return -1;}
+        int top = findHilltop(mountainArr);
         if (target > mountainArr.get(len / 2) || (target < mountainArr.get(0) && target < mountainArr.get(len - 1))) {
             return -1;
         }
         //特殊情况 若target < mountainArr.get(0) 直接搜索右半边
-        if (target < mountainArr.get(0)){
-            return findInMountainArrayRight(target, mountainArr, len / 2, len - 1).invoke().intValue();
-        }else {
-            //左半边未找到,搜索右半边
-            int index = findInMountainArrayLeft(target, mountainArr, 0, len / 2).invoke().intValue();
-            return index == -1 ? findInMountainArrayRight(target, mountainArr, len / 2, len - 1).invoke().intValue() : index;
-        }
+        //左半边未找到,搜索右半边
+        int index = findInMountainArray(target, mountainArr, 0, len / 2, true).invoke().intValue();
+        return index == -1 ? findInMountainArray(target, mountainArr, len / 2, len - 1, false).invoke().intValue() : index;
     }
 
-    static TailRecursion<Integer> findInMountainArrayLeft(int target, MountainArray mountainArr, int lo, int hi){
+    private static int findHilltop(MountainArray mountainArr) {
+        int lo = 0, hi = mountainArr.length() - 1;
+        int mid = (lo + hi) >> 1;
+        if (mid == 0) {return 1;}
+
+
+
+        return 0;
+    }
+
+    //mode:true 左半边查询
+    static TailRecursion<Integer> findInMountainArray(int target, MountainArray mountainArr, int lo, int hi, boolean mode){
         if (lo == hi){
             return target == mountainArr.get(lo) ? TailInvoke.done(lo) : TailInvoke.done(-1);
         }
         int mid = lo + (hi - lo) / 2;
-        if (target < mountainArr.get(mid)){
-            return TailInvoke.call(() -> findInMountainArrayLeft(target, mountainArr, lo, mid));
+        if (target < mountainArr.get(mid) == mode){
+            return TailInvoke.call(() -> findInMountainArray(target, mountainArr, lo, mid, mode));
         }else if (target >mountainArr.get(mid)){
-            return TailInvoke.call(() -> findInMountainArrayLeft(target, mountainArr, mid, hi));
+            return TailInvoke.call(() -> findInMountainArray(target, mountainArr, mid, hi, mode));
         }else {
             return TailInvoke.done(mid);
         }
