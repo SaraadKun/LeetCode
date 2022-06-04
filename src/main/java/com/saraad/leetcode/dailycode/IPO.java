@@ -1,6 +1,7 @@
 package com.saraad.leetcode.dailycode;
 
-import javafx.util.Pair;
+
+import com.saraad.leetcode.bean.Pair;
 
 import java.util.*;
 
