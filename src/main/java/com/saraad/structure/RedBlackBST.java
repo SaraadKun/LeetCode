@@ -10,8 +10,6 @@ import java.util.Queue;
  * Red-Black tree implementation.
  * 实现方法: put, get, delete, contains, size, isEmpty methods
  *
- * @param <Key>   type of keys maintained by this symbol table
- * @param <Value> type of associated values
  */
 public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
@@ -38,17 +36,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         }
     }
 
-    /**
-     * Initializes an empty symbol table.
-     */
     public RedBlackBST() {
     }
 
-    /**
-     * Returns the number of key-value pairs in this symbol table.
-     *
-     * @return the number of key-value pairs in this symbol table
-     */
     public int size() {
         return size(root);
     }
@@ -57,14 +47,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return root == null;
     }
 
-    /**
-     * Returns the value associated with the given key.
-     *
-     * @param key the key
-     * @return the value associated with the given key if the key is in the symbol table
-     * and {@code null} if the key is not in the symbol table
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public Value get(Key key) {
         if (key == null) throw new IllegalArgumentException("argument to get() is null");
         return get(root, key);
@@ -82,10 +64,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return null;
     }
 
-    /**
-     * Returns the height of the BST (for debugging).
-     * @return the height of the BST (a 1-node tree has height 0)
-     */
     public int height() {
         return height(root);
     }
@@ -94,11 +72,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return 1 + Math.max(height(x.left), height(x.right));
     }
 
-    /**
-     * Returns the smallest key in the symbol table.
-     * @return the smallest key in the symbol table
-     * @throws NoSuchElementException if the symbol table is empty
-     */
     public Key min() {
         if (isEmpty()) throw new NoSuchElementException("calls min() with empty symbol table");
         return min(root).key;
@@ -112,16 +85,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return get(key) != null;
     }
 
-    /**
-     * Inserts the specified key-value pair into the symbol table, overwriting the old
-     * value with the new value if the symbol table already contains the specified key.
-     * Deletes the specified key (and its associated value) from this symbol table
-     * if the specified value is {@code null}.
-     *
-     * @param key the key
-     * @param val the value
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void put(Key key, Value val) {
         if (key == null) throw new IllegalArgumentException("first argument to put() is null");
         if (val == null) {
@@ -224,13 +187,6 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return h;
     }
 
-    /**
-     * Removes the specified key and its associated value from this symbol table
-     * (if the key is in this symbol table).
-     *
-     * @param key the key
-     * @throws IllegalArgumentException if {@code key} is {@code null}
-     */
     public void delete(Key key) {
         if (key == null) throw new IllegalArgumentException("first argument to delete() is null");
         if (!contains(key))
