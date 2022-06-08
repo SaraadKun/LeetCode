@@ -1,6 +1,10 @@
 package com.saraad.structure;
 
+import lombok.Data;
+
+import java.util.ArrayDeque;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  * Red-Black tree implementation.
@@ -248,8 +252,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         3.要删除的节点是当前节点 : 若无右子树,直接删除,否则寻找右子树中最小的节点,替换掉当前节点,并将原来的右子树最小节点删除
      */
     private Node delete(Node h, Key key) {
-        int cmp = key.compareTo(h.key);
-        if (cmp < 0) {
+        if (key.compareTo(h.key) < 0) {
             //向左查找,参考deleteMin向下的判断条件
             if (!isRed(h.left) && !isRed(h.left.left))
                 h = moveRedLeft(h);
@@ -257,13 +260,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         } else {
             //向右删除(删除当前节点本质也是需要向右删除)需要确保右子节点不为2-节点,而
             if (isRed(h.left))
-                rotateRight(h);
-            if (cmp == 0 && (h.right == null))
+                h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && (h.right == null))
                 return null; //右节点为空,直接删除
             if (!isRed(h.right) && !isRed(h.right.left))
-                moveRedRight(h);
+                h = moveRedRight(h);
             //右子树不为空时删除当前节点
-            if (cmp == 0) {
+            if (key.compareTo(h.key) == 0) {
                 Node x = min(h.right);
                 h.key = x.key;
                 h.val = x.val;
@@ -326,6 +329,45 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     private boolean isRed(Node h) {
         return h != null && h.color == RED;
+    }
+
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Queue<Pair<Node, Integer>> queue = new ArrayDeque<>();
+        if (root != null)
+            queue.offer(Pair.of(root, 1));
+        int level = 1;
+        while (!queue.isEmpty()) {
+            Pair<Node, Integer> p = queue.poll();
+            Integer cl = p.getValue();
+            Node cur = p.getKey();
+            if (cl != level) {
+                sb.append("\n");
+                level = cl;
+            }
+            sb.append(cur.key).append(", ");
+            if (cur.left != null)
+                queue.offer(Pair.of(cur.left, cl + 1));
+            if (cur.right != null)
+                queue.offer(Pair.of(cur.right, cl + 1));
+        }
+        return sb.toString();
+    }
+
+    @Data
+    static class Pair<K, V> {
+        K key;
+        V value;
+
+        Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public static <K, V> Pair of(K key, V value){
+            return new Pair(key, value);
+        }
     }
 
 
