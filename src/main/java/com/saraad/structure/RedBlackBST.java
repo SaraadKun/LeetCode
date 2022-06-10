@@ -116,6 +116,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (!isRed(root.left) && !isRed(root.right))
             root.color = RED;
         root = deleteMin(root);
+        if (!isEmpty()) root.color = BLACK;
     }
 
     private Node deleteMin(Node h) {
@@ -128,6 +129,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (!isRed(h.left) && !isRed(h.left.left)) {
             h = moveRedLeft(h);
         }
+        h.left = deleteMin(h.left);
         //最后自底向上进行节点平衡处理(与put相同)
         return balance(h);
     }
@@ -138,6 +140,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (!isRed(root.left) && !isRed(root.right))
             root.color = RED;
         root = deleteMax(root);
+        if (!isEmpty()) root.color = BLACK;
     }
 
     //所有的变换操作都是为了保证在执行删除时,当前节点不是一个2-节点,即最终移除一个color == RED的节点
