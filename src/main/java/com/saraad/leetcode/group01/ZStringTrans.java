@@ -15,11 +15,16 @@ import java.util.List;
 public class ZStringTrans {
 
     public static void main(String[] args) {
-        String s = "LEETCODEISHIRING";
-        //LDREOEIIECIHNTSG
-        int rows = 2;
-        String convert = convert(s, rows);
-        System.out.println(convert);
+//        String s = "LEETCODEISHIRING";
+//        //LDREOEIIECIHNTSG
+//        int rows = 2;
+//        String convert = convert(s, rows);
+//        System.out.println(convert);
+        double imax = Integer.MAX_VALUE;
+        double i = 1e12;
+        double j = 1e9;
+        System.out.println(i > imax);
+        System.out.println(j > imax);
     }
 
     public static String convert(String s, int numRows) {
