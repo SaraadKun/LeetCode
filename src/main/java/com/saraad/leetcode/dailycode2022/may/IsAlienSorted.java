@@ -6,7 +6,7 @@ import java.util.Map;
 class IsAlienSorted {
 
     public static void main(String[] args) {
-        Map.of("", 1);
+//        Map.of("", 1);
         IsAlienSorted instance = new IsAlienSorted();
         String[] words = {"hello","leetcode"};
         String order = "hlabcdefgijkmnopqrstuvwxyz";
