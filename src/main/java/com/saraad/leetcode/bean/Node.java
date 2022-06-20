@@ -13,10 +13,14 @@ import lombok.Data;
 @Data
 public class Node {
 
-    int value;
-    Node next;
+    public int val;
+    public Node next;
 
     public Node(int value) {
-        this.value = value;
+        this.val = value;
+    }
+
+    public String toString() {
+        return String.valueOf(val);
     }
 }
