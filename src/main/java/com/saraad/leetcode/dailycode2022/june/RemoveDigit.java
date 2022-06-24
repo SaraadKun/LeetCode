@@ -1,5 +1,7 @@
 package com.saraad.leetcode.dailycode2022.june;
 
+import java.util.Objects;
+
 /**
  * @Description: 2259. 移除指定数字得到的最大结果
  * @Author: Saraad
@@ -21,4 +23,10 @@ public class RemoveDigit {
         }
         return number.substring(0, last) + number.substring(last + 1);
     }
+
+    public static void main(String[] args) {
+        RemoveDigit obj = new RemoveDigit();
+        assert Objects.equals(obj.removeDigit("123", '3'), "12");
+    }
+
 }
