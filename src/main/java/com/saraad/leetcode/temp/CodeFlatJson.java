@@ -28,14 +28,11 @@ public class CodeFlatJson {
 
         private Map<String, Trie> children = new HashMap<>();
 
-        private String key;
-
         private Object value;
 
         private boolean isEnd = false;
 
-        public Trie(String key, Object value) {
-            this.key = key;
+        public Trie(Object value) {
             this.value = value;
         }
 
@@ -73,6 +70,7 @@ public class CodeFlatJson {
 
     public static void main(String[] args) {
         Map<String, Object> dict = mock();
+        System.out.println(JSONUtil.writeValueAsString(dict));
         CodeFlatJson obj = new CodeFlatJson();
         System.out.println(obj.transformJson(dict));
     }
