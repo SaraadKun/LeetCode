@@ -7,7 +7,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Description: desc
+ * @Description:
+ *  Given a "flatten" dictionary object, whose keys are dot-separated.
+ *  For example, {"A":1,"B.A":2,"B.B":3,"CC.D.E":4,"CC.D.F":5}.
+ *  Implement a function to transform it to a "nested" dictionary object.
+ *  In the above case,the nested version is like:
+ *  {
+ *      "A": 1,
+ *      "B":
+ *      {
+ *          "A": 2,
+ *          "B": 3
+ *      },
+ *      "CC":
+ *      {
+ *          "D":
+ *          {
+ *              "E": 4,
+ *              "F": 5
+ *          }
+ *      }
+ *  }
+ *  It's guaranteed that no keys in dictionary are prefixes of other keys.
+ *
  * @Author: Saraad
  * @Link: url
  * @Date: 09-07-2022 13:27
@@ -16,10 +38,10 @@ import java.util.Map;
 public class CodeFlatJson {
 
     public String transformJson(Map<String, Object> dict) {
+        //build the trie
         Trie trie = new Trie();
-        dict.forEach((key, value) -> {
-            trie.add(key.split("\\."), 0, value);
-        });
+        dict.forEach((key, value) -> trie.add(key.split("\\."), 0, value));
+        //format the json
         Map<String, Object> map = trie.toMap();
         return JSONUtil.writeValueAsString(map);
     }
@@ -28,17 +50,12 @@ public class CodeFlatJson {
 
         private Map<String, Trie> children = new HashMap<>();
 
-        private Object value;
+        private Object value; //only if isEnd == true, value is not null
 
-        private boolean isEnd = false;
-
-        public Trie(Object value) {
-            this.value = value;
-        }
+        private boolean isEnd = false; //mark the end of the keys
 
         public Trie(){}
 
-        //[CC, D, E]
         public void add(String[] keys, int index, Object value) {
             if (index == keys.length) {
                 isEnd = true;
