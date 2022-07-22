@@ -1,5 +1,12 @@
 package com.saraad.leetcode.temp;
 
+import com.carrotsearch.sizeof.RamUsageEstimator;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @Title: TT2
  * @Package:com.saraad.leetcode.temp
@@ -10,15 +17,29 @@ package com.saraad.leetcode.temp;
  */
 public class TT2 {
 
+    private static InheritableThreadLocal<Integer> threadLocal = new InheritableThreadLocal<>();
+
     public static void main(String[] args) {
-        int i = 253;
-        int k = 1;
-        while ((i >>= 1) > 0) {
-            if ((i & 1) == 1) {
-                System.out.println(1 << k);
-            }
-            ++k;
-        }
+        threadLocal.set(123);
+        System.out.printf("name: %s, value : %d\n",Thread.currentThread().getName(), threadLocal.get());
+        CompletableFuture.supplyAsync(threadLocal::get)
+                .thenApplyAsync((i) -> {
+                    System.out.printf("name: %s, value : %d\n",Thread.currentThread().getName(), i);
+                    int value = i + 10;
+                    threadLocal.set(value);
+                    return value;
+                })
+                .thenAccept((i) -> {
+                    System.out.printf("name: %s, value : %d\n",Thread.currentThread().getName(), i);
+                })
+                .join();
+        System.out.println("end");
+//        Integer i = 1000;
+//        Integer i = 0xb8;
+//        System.out.println(RamUsageEstimator.sizeOf(i));
+//        System.out.println(i);
+
+
     }
 
 }
