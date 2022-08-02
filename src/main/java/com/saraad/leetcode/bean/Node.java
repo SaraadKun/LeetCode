@@ -20,6 +20,11 @@ public class Node {
         this.val = value;
     }
 
+   public Node(int value, Node next) {
+        this.val = value;
+        this.next = next;
+    }
+
     public String toString() {
         return String.valueOf(val);
     }
