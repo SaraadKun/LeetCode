@@ -166,11 +166,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private Node moveRedLeft(Node h) {
         //若h左右均为2-节点,则flipColor操作就足够了  因为h一定不为2-节点,所以flip之后,左右链接都为红
         flipColors(h);
-        //若h的右子节点不为2-节点,则此处操作相当于从h的右子节点"借"一个键移动到h的左子节点中
+        //若h的右子节点不为2-节点,则此处操作相当于从h的右子节点"借"一个红键移动到h的左子节点中
         if (isRed(h.right.left)) {
             //将h右子树的左节点(红键)右旋,将红键移到右侧 此时 h.right.right.color == RED
             h.right = rotateRight(h.right);
-            //将h右子树左旋  此时h的位置为原来的h.right, h和h.left的红链接下移,相当于给原h位置的左子节点添加了一个红键
+            //将h左旋  此时h的位置为原来的h.right, h和h.left的红链接下移,相当于给原h位置的左子节点添加了一个红键
             h = rotateLeft(h);
             //h颜色翻转后 h左右链接变为BLACK,h的BLACK链接恢复为RED
             flipColors(h);
@@ -221,11 +221,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             if (isRed(h.left))
                 h = rotateRight(h);
             if (key.compareTo(h.key) == 0 && (h.right == null))
-                return null; //右节点为空,直接删除
+                return null; //右节点为空,直接删除 当前节点一定不为2-节点
             if (!isRed(h.right) && !isRed(h.right.left))
-                h = moveRedRight(h);
+                h = moveRedRight(h); //向右删除参考deleteMax
             //右子树不为空时删除当前节点
             if (key.compareTo(h.key) == 0) {
+                //找到右子树中最小的节点,替换掉当前节点,并删除之(在当前节点右子树执行deleteMin)
                 Node x = min(h.right);
                 h.key = x.key;
                 h.val = x.val;
