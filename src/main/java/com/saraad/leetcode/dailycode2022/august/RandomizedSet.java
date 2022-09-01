@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @Description: desc
  * @Author: Saraad
- * @Link: https://leetcode.cn/problems/FortPu/
+ * @Link: <a href="https://leetcode.cn/problems/FortPu/">...</a>
  * @Date: 03-08-2022 15:54
  */
 public class RandomizedSet {
