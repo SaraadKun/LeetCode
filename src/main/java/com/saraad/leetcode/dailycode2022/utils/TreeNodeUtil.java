@@ -35,9 +35,9 @@ public class TreeNodeUtil {
             if (cur == null) {
                 continue;
             }
-            cur.left = arr[idx] == null ? null : new TreeNode(arr[idx]);
+            cur.left = arr[idx] != null ? new TreeNode(arr[idx]) : null;
             idx++;
-            cur.right = idx < n && arr[idx] == null ? null : new TreeNode(arr[idx]);
+            cur.right = idx < n && arr[idx] != null ? new TreeNode(arr[idx]) : null;
             idx++;
             q.offer(cur.left);
             q.offer(cur.right);
