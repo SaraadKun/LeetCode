@@ -1,6 +1,7 @@
 package com.saraad.leetcode.dailycode2022.august;
 
 import com.saraad.leetcode.bean.TreeNode;
+import com.saraad.leetcode.dailycode2022.utils.TreeNodeUtil;
 
 import java.util.ArrayDeque;
 import java.util.LinkedList;
@@ -55,30 +56,6 @@ public class WidthOfBinaryTree {
 
     private static TreeNode mock() {
         Integer[] arr = {1, 3, 2, 5, 3, null, 9};
-        TreeNode root = new TreeNode(arr[0]);
-        int n = arr.length, idx = 1;
-        Queue<TreeNode> q = new LinkedList<>();
-        q.offer(root);
-        while (!q.isEmpty() && idx < n) {
-            TreeNode cur = q.poll();
-            if (cur == null) {
-                continue;
-            }
-            if (idx < n && arr[idx] != null) {
-                cur.left = new TreeNode(arr[idx]);
-            } else {
-                cur.left = null;
-            }
-            idx++;
-            q.offer(cur.left);
-            if (idx < n && arr[idx] != null) {
-                cur.right = new TreeNode(arr[idx]);
-            } else {
-                cur.right = null;
-            }
-            idx++;
-            q.offer(cur.right);
-        }
-        return root;
+        return TreeNodeUtil.mock(arr);
     }
 }
