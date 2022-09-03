@@ -1,11 +1,7 @@
 package com.saraad.leetcode.dailycode2022.august;
 
 import com.saraad.leetcode.bean.TreeNode;
-import com.saraad.leetcode.dailycode2022.utils.TreeNodeUtil;
-
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
+import com.saraad.leetcode.utils.TreeNodeUtil;
 
 /**
  * @Description: desc

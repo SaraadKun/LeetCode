@@ -1,7 +1,7 @@
 package com.saraad.leetcode.dailycode2022.november;
 
 import com.saraad.leetcode.bean.TreeNode;
-import com.saraad.leetcode.dailycode2022.utils.TreeNodeUtil;
+import com.saraad.leetcode.utils.TreeNodeUtil;
 import org.junit.Assert;
 
 import java.util.Map;
