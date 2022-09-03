@@ -4,6 +4,9 @@ import com.saraad.leetcode.bean.TreeNode;
 import com.saraad.leetcode.dailycode2022.utils.TreeNodeUtil;
 import org.junit.Assert;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * @Description: desc
  * @Author: Saraad
@@ -35,6 +38,8 @@ public class LongestUnivaluePath {
         LongestUnivaluePath obj = new LongestUnivaluePath();
         Assert.assertEquals(2, obj.longestUnivaluePath(mock("[1,4,5,4,4,5]")));
         Assert.assertEquals(4, obj.longestUnivaluePath(mock("[1,null,1,1,1,1,1,1]")));
+        TreeMap<Integer, String> map = new TreeMap<>();
+        Map.Entry<Integer, String> integerStringEntry = map.floorEntry(1);
     }
 
     private static TreeNode mock(String input) {
