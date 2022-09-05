@@ -1,4 +1,4 @@
-package com.saraad.leetcode.dailycode2022.november;
+package com.saraad.leetcode.dailycode2022.september;
 
 import com.saraad.leetcode.bean.TreeNode;
 import com.saraad.leetcode.utils.TreeNodeUtil;

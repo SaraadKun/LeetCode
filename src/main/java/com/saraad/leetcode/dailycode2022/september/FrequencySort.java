@@ -1,4 +1,4 @@
-package com.saraad.leetcode.dailycode2022.november;
+package com.saraad.leetcode.dailycode2022.september;
 
 import java.util.HashMap;
 import java.util.Map;
