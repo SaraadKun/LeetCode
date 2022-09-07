@@ -39,7 +39,7 @@ public class NumSpecial {
 
     public static void main(String[] args) {
         NumSpecial obj = new NumSpecial();
-        Assert.assertEquals(2, obj.numSpecial(ArrayUtil.mock("[[0,0,0,1],[1,0,0,0],[0,1,1,0],[0,0,0,0]]")));
-        Assert.assertEquals(3, obj.numSpecial(ArrayUtil.mock("[[1,0,0],[0,0,1],[0,1,0]]")));
+        Assert.assertEquals(2, obj.numSpecial(ArrayUtil.mock2d("[[0,0,0,1],[1,0,0,0],[0,1,1,0],[0,0,0,0]]")));
+        Assert.assertEquals(3, obj.numSpecial(ArrayUtil.mock2d("[[1,0,0],[0,0,1],[0,1,0]]")));
     }
 }

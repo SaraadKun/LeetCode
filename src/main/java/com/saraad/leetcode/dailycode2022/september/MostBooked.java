@@ -48,8 +48,8 @@ public class MostBooked {
 
     public static void main(String[] args) {
         MostBooked obj = new MostBooked();
-        Assert.assertEquals(1, obj.mostBooked(3, ArrayUtil.mock("[[1,20],[2,10],[3,5],[4,9],[6,8]]")));
-        Assert.assertEquals(0, obj.mostBooked(4, ArrayUtil.mock("[[18,19],[3,12],[17,19],[2,13],[7,10]]")));
+        Assert.assertEquals(1, obj.mostBooked(3, ArrayUtil.mock2d("[[1,20],[2,10],[3,5],[4,9],[6,8]]")));
+        Assert.assertEquals(0, obj.mostBooked(4, ArrayUtil.mock2d("[[18,19],[3,12],[17,19],[2,13],[7,10]]")));
     }
 
 }
